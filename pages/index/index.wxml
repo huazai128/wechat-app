@@ -1,0 +1,50 @@
+<!--index.wxml-->
+<view class="container" >
+
+  <scroll-view scroll-top="0" 
+      scroll-y="true" 
+      style="height:{{scrollHeight}}px;"
+      bindscrolltolower="bindDownLoad" 
+      bindscroll="scroll">
+    <view class="swiper-container">
+      <swiper class="swiper_box" 
+      autoplay="{{autoplay}}" 
+      duration="{{duration}}" 
+      interval="{{interval}}" 
+      indicator-dots="{{indicatorDots}}" 
+      bindchange="swiperChange">
+        <block wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}" width="750rpx" height="562.5rpx"  class="slide-image"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class="dots">
+        <block wx:for="{{imgUrls}}" wx:key="id">
+          <view class="dot {{index == swiperCurrent ? 'active':''}}"></view>
+        </block>
+      </view>
+    </view>
+
+    <view class="type-container">
+      <scroll-view class="type-navbar" scroll-x="true" style="width: 100%;">
+        <view class="type-box" wx:for-items="{{categories}}">
+          <view class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" id="{{item.id}}" bindtap="tabClick">
+            {{item.name}}
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="goods-container">
+      <view class="goods-box" wx:for="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
+        <view class="img-box">
+          <image src="{{item.pic}}" class="image"></image>
+        </view>
+        <view class="goods-title">{{item.name}}</view>
+        <view class="goods-price">{{item.minPrice}}</view>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦！</view>
+</view>

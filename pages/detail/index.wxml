@@ -1,0 +1,69 @@
+<!--index.wxml-->
+<import src="../../wxParse/wxParse.wxml" />
+<view class="container">
+  <view class="swiper-container">
+    <swiper class="swiper_box" 
+            autoplay="{{autoplay}}" 
+            interval="{{interval}}" 
+            duration="{{duration}}"
+            bindchange="swiperchange">
+      <block wx:for="{{details.pics}}">
+        <swiper-item>
+          <image src="{{item.pic}}" class="silde-image"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="dots">
+      <block wx:for="{{details.pics}}" wx:key="id">
+        <view class="dot {{index == swiperCurrent ? 'active' : ''}}">{{index}}</view>
+      </block>
+    </view>
+  </view>
+  <view class="goods-info">
+    <view class="goods-title">{{details.basicInfo.name}}</view>
+    <view class="goods-price">¥{{selectSizePrice}}</view>
+  </view>
+
+  <view wx:if="{{hasMoreSelect}}" class="row-arrow" bindtap="bindGuiGeTap">
+    {{selectSize}}
+  </view>
+
+  <view class="goods-dos-info">
+    <view class="label-title">商品介绍</view>
+    <view class="goods-text">
+      <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    </view>
+  </view>
+  <view class="footer-box">
+    <view class="shop-cart-btn" bindtap="goShopCar">
+      <view class="shop-num">{{shopNum}}</view> 购物车
+    </view>
+    <view class="join-shop-cart" bindtap="addShopCar">加入购物车</view>
+    <view class="now-buy" bindtap="tobuy">加入购物车</view>
+  </view>
+
+  <view class="show-popup" wx:if="{{true}}">
+    <view class="popup-mask" bindtap="closePopupTap"></view>
+    <view class="popup-contents">
+      <view class="pop-goods-info">
+        <view class="pop-img-box">
+          <image src="{{details.basicInfo.pic}}" class="goods-thumbnail"></image>
+        </view>
+        <view class="pop-goods-des">
+          <view class="pop-goods-title">{{details.basicInfo.name}}</view>
+          <view class="pop-goods-price">¥{{selectSizePrice}}</view>
+        </view>
+        <view class="pop-goods-close" bindtap="closePopupTap"></view>
+      </view>
+
+      <view class="size-label-box">
+        <block wx:for="{{details.properties}}" wx:key="id">
+          <view class="classname"></view>
+        </block>
+      </view>
+
+
+      
+    </view>
+  </view>
+</view>
